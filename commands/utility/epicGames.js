@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { EpicFreeGames } = require("epic-free-games");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { EpicFreeGames } = require('epic-free-games');
 
 const epicGamesFree = new EpicFreeGames({ includeAll: true });
 
@@ -10,9 +10,9 @@ async function getGames() {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("epicgames")
+    .setName('epicgames')
     .setDescription(
-      "Replies with the current and next free games in the Epic Games Store"
+      'Replies with the current and next free games available in the Epic Games Store'
     ),
   async execute(interaction) {
     const { currentGames, nextGames } = await getGames();
@@ -24,7 +24,7 @@ module.exports = {
         .setURL(`https://store.epicgames.com/en-US/p/${game.urlSlug}`)
         .setDescription(`**${game.description}**`)
         .addFields({
-          name: "ORIGINAL PRICE",
+          name: 'ORIGINAL PRICE',
           value: game.price.totalPrice.fmtPrice.originalPrice,
         })
         .setImage(game.keyImages[0].url);
@@ -37,7 +37,7 @@ module.exports = {
         .setURL(`https://store.epicgames.com/en-US/p/${game.urlSlug}`)
         .setDescription(`**${game.description}**`)
         .addFields({
-          name: "ORIGINAL PRICE",
+          name: 'ORIGINAL PRICE',
           value: game.price.totalPrice.fmtPrice.originalPrice,
         })
         .setImage(game.keyImages[0].url);

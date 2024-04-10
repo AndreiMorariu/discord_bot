@@ -8,7 +8,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {},
-  "scripts": {},
+  "scripts": {
+    "deploy_commands": "node --env-file .env deploy_commands.js",
+    "start": "node --env-file .env index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
