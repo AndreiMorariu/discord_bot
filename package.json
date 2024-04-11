@@ -1,5 +1,4 @@
 {
-  "type": "commonjs",
   "dependencies": {
     "discord.js": "^14.14.1",
     "epic-free-games": "^4.0.2"
@@ -7,9 +6,9 @@
   "name": "test",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
+  "type": "module",
   "scripts": {
-    "deploy_commands": "node --env-file .env deploy_commands.js",
+    "deploy_commands": "node --env-file .env deploy-commands.js",
     "start": "node --env-file .env index.js"
   },
   "keywords": [],

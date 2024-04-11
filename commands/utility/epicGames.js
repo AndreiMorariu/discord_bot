@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { EpicFreeGames } = require('epic-free-games');
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { EpicFreeGames } from "epic-free-games";
 
 const epicGamesFree = new EpicFreeGames({ includeAll: true });
 
@@ -8,13 +8,15 @@ async function getGames() {
   return games;
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
-    .setName('epicgames')
+    .setName("epicgames")
     .setDescription(
-      'Replies with the current and next free games available in the Epic Games Store'
+      "Replies with the current and next free games available in the Epic Games Store"
     ),
   async execute(interaction) {
+    await interaction.deferReply();
+
     const { currentGames, nextGames } = await getGames();
 
     const currentEmbeds = currentGames.map((game) => {
@@ -24,7 +26,7 @@ module.exports = {
         .setURL(`https://store.epicgames.com/en-US/p/${game.urlSlug}`)
         .setDescription(`**${game.description}**`)
         .addFields({
-          name: 'ORIGINAL PRICE',
+          name: "ORIGINAL PRICE",
           value: game.price.totalPrice.fmtPrice.originalPrice,
         })
         .setImage(game.keyImages[0].url);
@@ -37,7 +39,7 @@ module.exports = {
         .setURL(`https://store.epicgames.com/en-US/p/${game.urlSlug}`)
         .setDescription(`**${game.description}**`)
         .addFields({
-          name: 'ORIGINAL PRICE',
+          name: "ORIGINAL PRICE",
           value: game.price.totalPrice.fmtPrice.originalPrice,
         })
         .setImage(game.keyImages[0].url);
@@ -45,6 +47,6 @@ module.exports = {
 
     const allEmbeds = [...currentEmbeds, ...nextEmbeds];
 
-    await interaction.reply({ embeds: allEmbeds });
+    await interaction.editReply({ embeds: allEmbeds });
   },
 };

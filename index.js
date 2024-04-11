@@ -1,8 +1,12 @@
-const fs = require("node:fs");
-const path = require("node:path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "url";
+import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
 
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 const token = process.env.token;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -20,7 +24,7 @@ for (const folder of commandFolders) {
 
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
+    const { default: command } = await import(filePath);
 
     if (command.data && command.execute) {
       client.commands.set(command.data.name, command);
@@ -39,7 +43,7 @@ const eventFiles = fs
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
+  const { default: event } = await import(filePath);
 
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
