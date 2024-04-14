@@ -14,50 +14,20 @@ export default async function () {
 
     await page.waitForSelector("#search_results");
 
-    const titles = await page.$$(".title");
-    const images = await page.$$(".search_capsule > img");
-    const dates = await page.$$(".search_released");
-    const prices = await page.$$(".discount_final_price");
-    const links = await page.$$(".search_result_row");
+    const games = await page.$$eval(".search_result_row", (rows) => {
+      return rows.map((row) => {
+        const title = row.querySelector(".title").textContent;
+        const priceElement = row.querySelector(".discount_final_price");
+        const price = priceElement ? priceElement.textContent : "Unknown";
+        const date =
+          row.querySelector(".search_released").textContent.trim() || "Unknown";
+        const image = row.querySelector("img").src;
+        const link = row.href;
+        return { title, price, date, image, link };
+      });
+    });
 
-    for (let i = 0; i < titles.length; i++) {
-      const titleElement = titles[i];
-      const imageElement = images[i];
-      const dateElement = dates[i];
-      const priceElement = prices[i];
-      const linkElement = links[i];
-
-      const title = await page.evaluate(
-        (titleElement) => titleElement.textContent,
-        titleElement
-      );
-
-      const price = priceElement
-        ? await page.evaluate(
-            (priceElement) => priceElement.textContent,
-            priceElement
-          )
-        : "Unknown";
-
-      const date = dateElement
-        ? await page.evaluate(
-            (dateElement) => dateElement.textContent,
-            dateElement
-          )
-        : "Unknown";
-
-      const image = await page.evaluate(
-        (imageElement) => imageElement.src,
-        imageElement
-      );
-
-      const link = await page.evaluate(
-        (linkElement) => linkElement.href,
-        linkElement
-      );
-
-      result.push({ title, date, image, price, link });
-    }
+    result.push(...games);
 
     await browser.close();
   } catch (error) {
