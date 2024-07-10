@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-export default async function () {
+export default async function getGames() {
   let result = [];
 
   try {
@@ -9,7 +9,7 @@ export default async function () {
     const page = await browser.newPage();
 
     await page.goto(
-      "https://store.steampowered.com//search/?filter=popularwishlist&os=win"
+      "https://store.steampowered.com//search/?filter=popularwishlist"
     );
 
     await page.waitForSelector("#search_results");
@@ -34,5 +34,6 @@ export default async function () {
     console.log(error);
   }
 
+  console.log(result.length);
   return result;
 }

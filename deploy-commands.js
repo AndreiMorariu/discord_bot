@@ -3,9 +3,9 @@ import path from "node:path";
 import { fileURLToPath } from "url";
 import { REST, Routes } from "discord.js";
 
-const token = process.env.token;
-const clientId = process.env.clientId;
-const guildId = process.env.guildId;
+const token = process.env.TOKEN;
+const clientId = process.env.CLIENT_ID;
+const guildId = process.env.GUILD_ID;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
