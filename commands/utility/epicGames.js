@@ -18,7 +18,7 @@ export default {
       const currentEmbeds = currentGames.map((game) => {
         return new EmbedBuilder()
           .setColor(0x0099ff)
-          .setTitle(`**FREE NOW: ${game.title}**`)
+          .setTitle(`**FREE NOW: ${game.title.toUpperCase()}**`)
           .setURL(`https://store.epicgames.com/en-US/p/${game.urlSlug}`)
           .setDescription(`**${game.description}**`)
           .addFields({

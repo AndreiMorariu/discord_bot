@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "canvas": "^2.11.2",
-    "cheapshark-ts": "^1.2.1",
+    "@supabase/supabase-js": "^2.44.4",
     "discord.js": "^14.14.1",
     "epic-free-games": "^4.0.2",
-    "puppeteer": "^22.6.4"
+    "puppeteer": "^22.6.4",
+    "toad-scheduler": "^3.0.1"
   },
   "overrides": {
     "axios": "1.7.2"
