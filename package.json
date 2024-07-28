@@ -15,7 +15,7 @@
   "type": "module",
   "scripts": {
     "deploy_commands": "node --env-file .env deploy-commands.js",
-    "start": "nodemon --env-file .env index.js"
+    "start": "node --env-file .env index.js"
   },
   "keywords": [],
   "author": "",
