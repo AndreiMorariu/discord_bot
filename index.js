@@ -5,10 +5,18 @@ import { Client, Collection, GatewayIntentBits } from "discord.js";
 
 const token = process.env.TOKEN;
 
+const prefix = "!";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
 
 client.commands = new Collection();
 
@@ -51,5 +59,11 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
+
+client.on("messageCreate", (message) => {
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+  message.channel.send("Use the slash command /help to get started");
+});
 
 client.login(token);
